@@ -1,11 +1,8 @@
 import { createHashRouter } from "react-router";
-//import { Dashboard } from "./pages/dashboard";
-//import { Bd22Nd } from "./pages/birthday/bd22nd";
 
 export const router = createHashRouter([
     {
         path: "/",
-        //element: <Dashboard />,
         lazy: async () => {
             const { Dashboard } = await import("./pages/dashboard.tsx");
             return {
