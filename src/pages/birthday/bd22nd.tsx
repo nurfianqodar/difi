@@ -605,7 +605,7 @@ export const Bd22Nd: React.FC = () => {
                     Selamat ulang tahun, Pudan 💜
                 </p>
                 <p className="mt-2 font-sans text-sm text-violet-500/80">
-                    dibuat dengan banyak sayang, khusus untuk hari ke-22-mu.
+                    Made with 💜 by Nurfian Qodar
                 </p>
             </footer>
 
