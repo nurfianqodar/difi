@@ -1,46 +1,178 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import type { IconType } from "react-icons";
-import { FaBirthdayCake, FaGift, FaHeart, FaStar } from "react-icons/fa";
-import { GiBalloons, GiPartyPopper } from "react-icons/gi";
+import { FaBirthdayCake } from "react-icons/fa";
+import { GiPartyPopper } from "react-icons/gi";
 
 /* ------------------------------------------------------------------ */
 /*  Data — easy to edit                                               */
 /* ------------------------------------------------------------------ */
 
+import {
+    FaBook,
+    FaCamera,
+    FaCloudSun,
+    FaCoffee,
+    FaCompass,
+    FaFeather,
+    FaFire,
+    FaGem,
+    FaGift,
+    FaHandsHelping,
+    FaHeart,
+    FaHome,
+    FaInfinity,
+    FaLeaf,
+    FaMoon,
+    FaMusic,
+    FaRocket,
+    FaSeedling,
+    FaSmile,
+    FaStar,
+    FaSun,
+} from "react-icons/fa";
+
+import { GiBalloons } from "react-icons/gi";
+
 const WISHES: { title: string; text: string; icon: IconType }[] = [
     {
         title: "Sehat & Bahagia",
         text:
-            "Semoga di umur 22 ini, kamu makin sehat, makin bahagia, dan makin dikasih ketenangan dalam menjalani hari-hari.",
+            "Semoga umur 22 ini dipenuhi tubuh yang sehat dan hati yang lebih tenang.",
         icon: FaHeart,
     },
     {
-        title: "Mimpi yang Terwujud",
+        title: "Mimpi yang Tercapai",
         text:
-            "Semua mimpi dan rencana yang kamu susun diam-diam, semoga pelan-pelan jadi kenyataan satu per satu.",
+            "Semoga semua mimpi yang kamu simpan pelan-pelan menemukan jalannya.",
         icon: FaStar,
     },
     {
-        title: "Dikelilingi Orang Baik",
+        title: "Orang-Orang Baik",
         text:
-            "Semoga selalu dikelilingi orang-orang yang tulus sayang sama kamu, persis kayak kamu sayang ke mereka.",
+            "Semoga selalu dikelilingi orang yang menghargai dan menyayangimu.",
         icon: GiBalloons,
     },
     {
-        title: "Versi Terbaik Dirimu",
-        text:
-            "Semoga tahun ini jadi tahun di mana kamu makin kenal & makin sayang sama diri sendiri.",
+        title: "Lebih Menyayangi Diri",
+        text: "Semoga kamu semakin bangga dengan dirimu sendiri.",
         icon: FaGift,
+    },
+    {
+        title: "Hari yang Cerah",
+        text: "Semoga lebih banyak hari yang terasa ringan dan menyenangkan.",
+        icon: FaSun,
+    },
+    {
+        title: "Tidur yang Nyenyak",
+        text: "Semoga malam-malammu penuh istirahat tanpa banyak pikiran.",
+        icon: FaMoon,
+    },
+    {
+        title: "Tumbuh dengan Cantik",
+        text: "Semoga semua prosesmu membawamu ke versi terbaik dirimu.",
+        icon: FaLeaf,
+    },
+    {
+        title: "Lebih Banyak Tertawa",
+        text: "Semoga ada lebih banyak alasan untuk tersenyum tahun ini.",
+        icon: FaSmile,
+    },
+    {
+        title: "Terus Belajar",
+        text: "Semoga rasa penasaranmu tidak pernah habis.",
+        icon: FaBook,
+    },
+    {
+        title: "Waktu untuk Istirahat",
+        text: "Semoga kamu tidak lupa berhenti sejenak dan menikmati hidup.",
+        icon: FaCoffee,
+    },
+    {
+        title: "Hari dengan Lagu Favorit",
+        text: "Semoga selalu ada lagu yang menemani hari-hari sulitmu.",
+        icon: FaMusic,
+    },
+    {
+        title: "Hal-Hal Baru",
+        text:
+            "Semoga tahun ini membawa pengalaman yang belum pernah kamu bayangkan.",
+        icon: FaSeedling,
+    },
+    {
+        title: "Langit yang Baik",
+        text: "Semoga setelah hujan selalu ada hari yang lebih terang.",
+        icon: FaCloudSun,
+    },
+    {
+        title: "Pertemanan yang Hangat",
+        text: "Semoga selalu punya tempat pulang dalam bentuk manusia.",
+        icon: FaHandsHelping,
+    },
+    {
+        title: "Arah yang Jelas",
+        text: "Semoga langkahmu selalu menemukan tujuan yang baik.",
+        icon: FaCompass,
+    },
+    {
+        title: "Semangat yang Tidak Padam",
+        text: "Semoga kamu tetap percaya pada dirimu bahkan saat lelah.",
+        icon: FaFire,
+    },
+    {
+        title: "Hati yang Ringan",
+        text: "Semoga kamu belajar melepaskan hal yang memang bukan untukmu.",
+        icon: FaFeather,
+    },
+    {
+        title: "Tempat yang Nyaman",
+        text: "Semoga selalu merasa aman menjadi dirimu sendiri.",
+        icon: FaHome,
+    },
+    {
+        title: "Berani Bermimpi Besar",
+        text: "Semoga tidak takut mengejar sesuatu yang terasa jauh.",
+        icon: FaRocket,
+    },
+    {
+        title: "Momen yang Layak Diingat",
+        text: "Semoga tahun ini penuh foto dan cerita yang ingin dikenang.",
+        icon: FaCamera,
+    },
+    {
+        title: "Tetap Bersinar",
+        text: "Semoga kamu sadar betapa berharganya dirimu.",
+        icon: FaGem,
+    },
+    {
+        title: "Cinta yang Tidak Habis",
+        text:
+            "Semoga kamu selalu dipenuhi cinta — dari diri sendiri dan orang-orang di sekitarmu.",
+        icon: FaInfinity,
     },
 ];
 
 const TIMELINE = [
-    { age: "Dulu", note: "Awal cerita yang penuh keceriaan." },
-    { age: "Kemarin", note: "Banyak cerita, banyak tumbuh, banyak belajar." },
-    { age: "Hari ini", note: "22 tahun — tepat di titik ini, merayakan kamu." },
-    { age: "Nanti", note: "Babak baru, penuh harapan baik." },
+    {
+        age: "First Meet",
+        note:
+            "The first time I saw you, I knew you were someone remarkable — graceful, charismatic, and quietly inspiring in ways I couldn’t explain.",
+    },
+    {
+        age: "The Beginning",
+        note:
+            "We went through disagreements, difficult moments, and things that tested us — yet somehow, we kept choosing each other.",
+    },
+    {
+        age: "Today",
+        note:
+            "This is our third celebration together. I know I haven’t always given you my best, and for that, I’m sorry — but every year with you reminds me to become better.",
+    },
+    {
+        age: "Someday",
+        note:
+            "I’ll keep fighting for us, for our dreams, and for a future where I can give you everything you deserve.",
+    },
 ];
-
 /* ------------------------------------------------------------------ */
 /*  Confetti piece                                                     */
 /* ------------------------------------------------------------------ */
@@ -176,7 +308,7 @@ function GiftEnvelope(
                 >
                     <FaBirthdayCake className="text-violet-600" size={30} />
                     <p className="font-indie text-2xl text-violet-800">
-                        Untuk Pudan tersayang,
+                        Dear Pudan,
                     </p>
                     <p className="text-sm text-violet-700/80">
                         ketuk sekali lagi untuk membaca pesan lengkapnya di
@@ -286,8 +418,8 @@ export const Bd22Nd: React.FC = () => {
                     </p>
 
                     <p className="mt-6 max-w-md font-sans text-base text-violet-700/80 sm:text-lg">
-                        Satu kado kecil menantimu di bawah ini. Buka
-                        pelan-pelan, ya 🎁
+                        A small surprise is waiting for you below — unwrap it
+                        gently 🎁
                     </p>
 
                     <div className="mt-10">
@@ -314,11 +446,10 @@ export const Bd22Nd: React.FC = () => {
             >
                 <div className="mx-auto max-w-3xl text-center">
                     <h2 className="font-indie text-4xl text-violet-900 sm:text-5xl">
-                        Pesan untuk hari ini
+                        22 Pesan
                     </h2>
                     <p className="mx-auto mt-4 max-w-xl font-sans text-violet-700/80">
-                        Empat harapan kecil, dititipkan dengan tulus, khusus
-                        untuk kamu yang sekarang resmi berusia 22 tahun.
+                        Untuk 22 tahun pudan <FaHeart />
                     </p>
                 </div>
 
